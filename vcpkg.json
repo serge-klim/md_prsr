@@ -1,0 +1,16 @@
+{
+  "dependencies": [
+    "boost-describe",
+    "boost-mp11",
+    "boost-iostreams",
+    "boost-log",
+    "boost-url",
+    "boost-stl-interfaces",
+    "transcoder",
+    "boost-program-options",
+    "boost-test",
+    "boost-histogram",
+    "transcoder",
+    "h5x"
+  ]
+}

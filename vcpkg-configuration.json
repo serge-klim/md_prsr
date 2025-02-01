@@ -1,0 +1,15 @@
+{
+  "default-registry": {
+    "kind": "git",
+    "repository": "https://github.com/microsoft/vcpkg",
+    "baseline": "80d54ff62d528339c626a6fbc3489a7f25956ade"
+  },
+  "registries": [
+    {
+      "kind": "git",
+      "repository": "https://github.com/serge-klim/pkgs",
+      "baseline": "daf16b7c59557d6522870e0cbe584f51cd608ae3",
+      "packages": [ "h5x", "transcoder" ]
+    }
+  ]
+}
