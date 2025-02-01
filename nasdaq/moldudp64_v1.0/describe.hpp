@@ -16,5 +16,5 @@ BOOST_DESCRIBE_STRUCT(packet_block, (),
     message_size;
 ))
 
-} // namespace nasdaq::itch::v5_1
+} // namespace nasdaq::itch::v5_0
 

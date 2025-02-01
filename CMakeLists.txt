@@ -7,7 +7,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 option (BUILD_TESTS "build tests" ON)
 option (BUILD_TOOLS "build tools" OFF)
-option (BUILD_NASDAQ_ITCH_V5_0 "build nasdaq/itch_v5.0" OFF)
+option (BUILD_NASDAQ_ITCH_V5_0 "build nasdaq/itch_v5.0" ON)
 option (BUILD_NASDAQ_MOLDUDP64_V1_0 "build nasdaq/moldudp64_v1.0" ON)
 
 if(BUILD_NASDAQ_ITCH_V5_0)
