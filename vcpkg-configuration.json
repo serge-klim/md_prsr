@@ -8,8 +8,8 @@
     {
       "kind": "git",
       "repository": "https://github.com/serge-klim/pkgs",
-      "baseline": "daf16b7c59557d6522870e0cbe584f51cd608ae3",
-      "packages": [ "h5x", "transcoder" ]
+      "baseline": "a069078be0f78b0fc763473a46d911b7ed85ec91",
+      "packages": [ "hdf5-blosc", "h5x", "transcoder" ]
     }
   ]
 }
