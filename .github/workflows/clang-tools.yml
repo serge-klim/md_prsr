@@ -1,0 +1,91 @@
+name: "llvm tools"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ${{ matrix.os }}
+    
+    permissions:
+      # required for all workflows
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        build_type: [Debug]
+        c_compiler: [clang]
+        cxx_standard: [23]        
+        include:
+          - build-mode: manual
+            c_compiler: clang
+            cpp_compiler: clang++
+            vcpkgCommitId: '80d54ff62d528339c626a6fbc3489a7f25956ade'
+            vcpkg_triplet: 'x64-linux'
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup vcpkg
+      uses: lukka/run-vcpkg@v11
+      id: runvcpkg
+      with:
+        # This specifies the location of vcpkg, where it is going to be restored from cache, or create from scratch.
+        vcpkgDirectory: '${{ runner.workspace }}/b/vcpkg'
+        # The Git commit id of vcpkg to be checked out. This is only needed because we are not using a submodule.
+        vcpkgGitCommitId: '${{ matrix.vcpkgCommitId}}'
+        # The vcpkg.json file, which will be part of cache key computation.
+        vcpkgJsonGlob: '**/vcpkg.json'
+        
+    - name: Prints output of run-vcpkg's action
+      run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}'"
+
+    - name: Set reusable strings
+      # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
+      id: strings
+      shell: bash
+      run: |
+        echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+
+    - name: Configure CMake
+      run: >
+        cmake -B ${{ steps.strings.outputs.build-output-dir }}
+        -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
+        -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
+        -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+        -DCMAKE_CXX_STANDARD=${{ matrix.cxx_standard }}
+        -DCMAKE_TOOLCHAIN_FILE="${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}/scripts/buildsystems/vcpkg.cmake"
+        -DVCPKG_TARGET_TRIPLET=${{ matrix.vcpkg_triplet}}
+        -DCMAKE_CXX_FLAGS="-fprofile-instr-generate -fcoverage-mapping -fprofile-instr-generate" 
+        -S ${{ github.workspace }}
+
+    - name: Build
+      # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
+      run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
+
+    - name: Setup llvm
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y --no-install-recommends llvm
+           
+    - name: Test
+      working-directory: ${{ steps.strings.outputs.build-output-dir }}
+      run: |
+        ${{ steps.strings.outputs.build-output-dir }}/test/nasdaq_itch_v5.0/nasdaq_itch_v5_0_test
+        llvm-profdata merge -sparse default.profraw -o md_prsr.profdata
+        llvm-cov show ${{ steps.strings.outputs.build-output-dir }}/test/nasdaq_itch_v5.0/nasdaq_itch_v5_0_test -instr-profile=md_prsr.profdata > coverage.txt
+
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        slug: serge-klim/md_prsr
+        fail_ci_if_error: true          
+        verbose: true
+        files: ./coverage.txt
