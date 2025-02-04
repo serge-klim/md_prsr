@@ -18,8 +18,8 @@ endif (WIN32)
 
 find_package(Boost COMPONENTS program_options iostreams log log_setup REQUIRED )
 find_package(transcoder CONFIG REQUIRED)
-find_package(hdf5_blosc CONFIG)
 find_package(h5x CONFIG REQUIRED)
+find_package(hdf5_blosc)
 
 add_executable (nasdaq_itch_v5_0_tool
                 main.cpp
@@ -35,10 +35,15 @@ add_executable (nasdaq_itch_v5_0_tool
                 message_dump.cpp
                 )
 
+if (${hdf5_blosc_FOUND})
+    target_compile_definitions(nasdaq_itch_v5_0_tool PRIVATE USE_BLOSC)
+endif (${hdf5_blosc_FOUND})
+
+
 target_link_libraries(nasdaq_itch_v5_0_tool
 		transcoder::transcoder
         md_prsr::nasdaq_itch_v5_0
-        unofficial::hdf5_blosc
+        $<$<BOOL:${hdf5_blosc_FOUND}>:unofficial::hdf5_blosc>
         h5x::h5x
         fb::fb_utils::program_options
         fb::fb_utils::program_options::log

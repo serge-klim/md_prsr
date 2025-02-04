@@ -4,7 +4,9 @@
 #include "transcoder/type_name.hpp"
 #include "h5x/timestamp.hpp"
 #include "h5x/h5_describe.hpp"
+#ifdef USE_BLOSC
 #include "blosc_filter.h"
+#endif // USE_BLOSC
 #include <boost/mp11/utility.hpp>
 #include <variant>
 #include <string>
@@ -19,7 +21,7 @@ std::string h5_filename(boost::program_options::variables_map const& options) {
 
 template <typename... T>
 std::tuple<h5x::data_sink<T>...> make_message_writers(H5::H5Location const& location, boost::mp11::mp_identity<std::tuple<h5x::data_sink<T>...>>) {
-
+#ifdef USE_BLOSC
    char* version = nullptr;
    char* date = nullptr;
    int r = register_blosc(&version, &date);
@@ -40,6 +42,9 @@ std::tuple<h5x::data_sink<T>...> make_message_writers(H5::H5Location const& loca
    props.setFilter(FILTER_BLOSC, H5Z_FLAG_OPTIONAL, 7, cd_values);
 
    return {h5x::data_sink<T>{location, nasdaq::itch::v5_0::type_name<T>{}().c_str(), props}...};
+#else
+   return {h5x::data_sink<T>{location, nasdaq::itch::v5_0::type_name<T>{}().c_str()}...};
+#endif // USE_BLOSC
 }
 
 } // namespace
