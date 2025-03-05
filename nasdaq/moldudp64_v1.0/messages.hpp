@@ -5,11 +5,13 @@
 namespace nasdaq::moldudp64::v1_0 {
 
 using session_t = std::array<char,10>;
+using seqn_t = std::uint64_t;
+
 
 struct header
 {
     session_t session;
-    std::uint64_t sequence_number;
+    seqn_t sequence_number;
     std::uint16_t message_count;
 };
    
