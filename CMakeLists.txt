@@ -28,6 +28,16 @@ endif (BUILD_TESTS)
 
 if(BUILD_TOOLS)
   if(BUILD_NASDAQ_ITCH_V5_0) 
+	include(FetchContent)
+
+	FetchContent_Declare(
+	fb_utils
+	GIT_REPOSITORY https://github.com/serge-klim/fb_utils.git
+	GIT_TAG        7b4381a69bcbcb0f98f8c1f22076dbfba272e79d
+	)
+
+	FetchContent_MakeAvailable(fb_utils)
+
 	add_subdirectory(tools/nasdaq_itch_v5.0)
    endif (BUILD_NASDAQ_ITCH_V5_0)
 endif (BUILD_TOOLS)

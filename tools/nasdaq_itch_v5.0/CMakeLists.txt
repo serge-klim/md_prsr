@@ -1,15 +1,4 @@
-﻿#set(Boost_USE_STATIC_LIBS ON)
-include(FetchContent)
-
-FetchContent_Declare(
-  fb_utils
-  GIT_REPOSITORY https://github.com/serge-klim/fb_utils.git
-  GIT_TAG        f86e57f3dad01f6f6b2e6f533a53c8f8efc17d83
-)
-
-FetchContent_MakeAvailable(fb_utils)
-
-if (WIN32)
+﻿if (WIN32)
    find_package(zstd REQUIRED CONFIG)
    add_library(zstd ALIAS zstd::libzstd_static)
    find_package(liblzma REQUIRED CONFIG)

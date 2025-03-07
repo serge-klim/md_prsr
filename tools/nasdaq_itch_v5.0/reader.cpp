@@ -115,6 +115,18 @@ template <typename Processor>
 void run(boost::program_options::variables_map const &options, Processor &proc) {
     auto duration = std::chrono::system_clock::duration::min();
     try {
+       struct on_falure {
+          on_falure(std::chrono::system_clock::duration& duration) : 
+              duration_{duration}, start_{std::chrono::system_clock::now()}
+          {}
+          ~on_falure(){
+             if (duration_ == std::chrono::system_clock::duration::min())
+                duration_ = std::chrono::system_clock::now() - start_;
+          }
+        private:
+          std::chrono::system_clock::duration& duration_;
+          std::chrono::system_clock::time_point start_;
+       } on_falure_{duration};
        auto const filename = options["filename"].as<std::string>();
        if (check_type(filename) == input_type::gzip) {
           BOOST_LOG_SEV(log::get(), boost::log::trivial::warning) << "processing file: " << filename << "...";
