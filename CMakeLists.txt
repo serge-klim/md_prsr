@@ -12,11 +12,11 @@ option (BUILD_NASDAQ_MOLDUDP64_V1_0 "build nasdaq/moldudp64_v1.0" ON)
 option (BUILD_CME_MDP3_V9 "build cme/mdp3" ON)
 
 if(BUILD_NASDAQ_ITCH_V5_0)
-    add_subdirectory(nasdaq/itch_v5.0)
+    add_subdirectory(md_prsr/nasdaq/itch_v5.0)
 endif (BUILD_NASDAQ_ITCH_V5_0)
 
 if(BUILD_NASDAQ_MOLDUDP64_V1_0)
-    add_subdirectory(nasdaq/moldudp64_v1.0)
+    add_subdirectory(md_prsr/nasdaq/moldudp64_v1.0)
 endif (BUILD_NASDAQ_MOLDUDP64_V1_0)
 
 if(BUILD_CME_MDP3_V9)
@@ -46,7 +46,7 @@ if(BUILD_TOOLS)
 	add_subdirectory(tools/nasdaq_itch_v5.0)
   endif (BUILD_NASDAQ_ITCH_V5_0)
   if(BUILD_CME_MDP3_V9)
-  	add_subdirectory(tools/cme_mdp3/reader)
+ # 	add_subdirectory(tools/cme_mdp3/reader)
   endif (BUILD_CME_MDP3_V9)
 
 endif (BUILD_TOOLS)
