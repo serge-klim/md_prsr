@@ -53,25 +53,16 @@ hdf5_writer::hdf5_writer(boost::program_options::variables_map const& options)
     : filename_{h5_filename(options)}, file_{filename_, H5F_ACC_TRUNC}, writers_{make_message_writers(file_, boost::mp11::mp_identity<message_writers>{})} {
 }
 
-std::ptrdiff_t hdf5_writer::operator()(tc::byte_t const* begin, tc::byte_t const* end) {
-   using header = std::uint16_t;
-   while (sizeof(header) <= static_cast<std::size_t>(std::distance(begin, end))) {
-      auto size = nasdaq::itch::v5_0::decode<header>(begin, end);
-      if (size > std::distance(begin, end)) {
-         begin -= sizeof(header);
-         break;
-      }
-      [[maybe_unused]] auto const message_end = begin + size;
-      auto const decoded = nasdaq::itch::v5_0::decode<nasdaq::itch::v5_0::messages>(begin, end);
-      std::visit([this](auto message) {
-         auto& writer = std::get<h5x::data_sink<decltype(message)>>(writers_);
-         writer.push_back(std::move(message));
-      },
-                 decoded);
-      ++count_;
-      assert(message_end == begin);
-   }
-   return std::distance(begin, end);
+std::ptrdiff_t hdf5_writer::operator()(nasdaq::moldudp64::v1_0::seqn_t /*seqn*/, tc::byte_t const* begin, tc::byte_t const* end) {
+    auto const decoded = nasdaq::itch::v5_0::decode<nasdaq::itch::v5_0::messages>(begin, end);
+    std::visit([this](auto message) {
+        auto& writer = std::get<h5x::data_sink<decltype(message)>>(writers_);
+        writer.push_back(std::move(message));
+    },
+                decoded);
+    ++count_;
+    assert(begin == end);
+    return 0;
 }
 
 void hdf5_writer::done(std::chrono::system_clock::duration duration) {

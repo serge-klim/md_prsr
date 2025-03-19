@@ -2,6 +2,7 @@
 #include "message_counter.hpp"
 #include "message_dump.hpp"
 //#include "snapshotter.hpp"
+#include "fake_sequence.hpp"
 #include "hdf5_writer.hpp"
 #include <boost/program_options.hpp>
 #include <boost/iostreams/device/mapped_file.hpp>
@@ -21,6 +22,7 @@
 
 template<typename Processor>
 auto read_directly(boost::iostreams::filtering_streambuf<boost::iostreams::input>&& in, Processor& proc, std::size_t buffer_size) {
+    auto sequence = fake_sequence{};
     auto buffer = std::vector<char>(buffer_size);
     auto begin = buffer.data();
     auto start = std::chrono::system_clock::now();
@@ -30,7 +32,7 @@ auto read_directly(boost::iostreams::filtering_streambuf<boost::iostreams::input
             break;
 
         auto end = begin + leftover + read;
-        leftover = proc(begin, end);
+        leftover = sequence(begin, end, proc);
         if (leftover == buffer_size)
             throw std::runtime_error{ "decoded size seems wrong, or buffer has to be increased" };
         if (leftover != 0)
@@ -75,8 +77,9 @@ auto unpack_then_process(boost::iostreams::filtering_streambuf<boost::iostreams:
         << std::chrono::duration_cast<std::chrono::seconds>(duration).count() << " secs.)";
     auto begin = mmap.data();
     auto end = begin + total;
+    auto sequence = fake_sequence{};
     start = std::chrono::system_clock::now();
-    auto leftover = proc(begin, end);
+    auto leftover = sequence(begin, end, proc);
     duration = std::chrono::system_clock::now() - start;
     if (leftover != 0) {
         BOOST_LOG_SEV(log::get(), boost::log::trivial::warning) << leftover << " bytes, was left unprocessed !!!";
@@ -88,10 +91,11 @@ template<typename Processor>
 auto process_raw(std::string const& filename, Processor& proc) {
     boost::iostreams::mapped_file_sink mmap;
     mmap.open(filename);
+    auto sequence = fake_sequence{};
     auto start = std::chrono::system_clock::now();
     auto begin = mmap.data();
     auto end = begin + mmap.size();
-    auto leftover = proc(begin, end);
+    auto leftover = sequence(begin, end, proc);
     auto period = std::chrono::system_clock::now() - start;
     if (leftover != 0) {
         BOOST_LOG_SEV(log::get(), boost::log::trivial::warning) << leftover << " bytes, was left unprocessed !!!";

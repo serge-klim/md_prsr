@@ -8,7 +8,7 @@ BOOST_DESCRIBE_STRUCT(header, (),
 (
     session,
     sequence_number,
-    message_count,
+    message_count
 ))
    
 BOOST_DESCRIBE_STRUCT(packet_block, (),

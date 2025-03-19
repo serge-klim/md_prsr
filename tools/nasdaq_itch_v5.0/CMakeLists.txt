@@ -13,6 +13,7 @@ find_package(hdf5_blosc)
 add_executable (nasdaq_itch_v5_0_tool
                 main.cpp
                 reader.cpp
+                fake_sequence.hpp
                 message_counter.cpp
                 message_counter.hpp
                 h5x/timestamp.hpp
