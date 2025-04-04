@@ -6,7 +6,6 @@
     "boost-log",
     "boost-url",
     "boost-stl-interfaces",
-    "transcoder",
     "boost-program-options",
     "boost-test",
     "boost-histogram",
