@@ -1217,18 +1217,17 @@ using messages = std::variant<
 	MDInstrumentDefinitionSpread56
 >;
 
+struct extended_message_header {
+   std::uint16_t msg_size;
+   std::uint16_t blockLength;
+   std::uint16_t templateId;
+   std::uint16_t schemaId;
+   std::uint16_t version;
+};
+
 } // namespace cme::mdp3::v9
 
-template <>
-struct tc::type_id<cme::mdp3::v9::messages> {
-   decltype(cme::mdp3::v9::messageHeader::templateId) const* operator()(tc::byte_t const* begin, tc::byte_t const* /*end*/) const noexcept {
-      struct header {
-         std::uint16_t msg_size;
-         cme::mdp3::v9::messageHeader message_header;
-      };
-      return &reinterpret_cast<header const*>(begin)->message_header.templateId;
-   }
-};
+template <> struct tc::type_id<cme::mdp3::v9::messages> { using type = tc::proto_type_id<&cme::mdp3::v9::extended_message_header::templateId>;};
 
 template<> struct tc::type_id<cme::mdp3::v9::AdminHeartbeat12> { constexpr std::uint16_t operator()() const noexcept { return 12;} };
 template<> struct tc::type_id<cme::mdp3::v9::AdminLogin15> { constexpr std::uint16_t operator()() const noexcept { return 15;} };

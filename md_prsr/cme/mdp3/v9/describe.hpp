@@ -994,6 +994,9 @@ BOOST_DESCRIBE_STRUCT(MDInstrumentDefinitionSpread56::NoLegs, (), (
 	legOptionDelta,
 ))
 
-
+BOOST_DESCRIBE_STRUCT(extended_message_header, (),
+                      (msg_size,
+                       blockLength,
+                       templateId))
 
 } // namespace cme::mdp3::v9
