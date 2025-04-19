@@ -1,4 +1,5 @@
 #define BOOST_TEST_MODULE nasdaq_tests
+#include "cmp.hpp"
 #include "md_prsr/nasdaq/itch_v5.0/transcoder.hpp"
 #include "transcoder/transcoder.hpp"
 #include "transcoder/type_name.hpp"
@@ -31,6 +32,10 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(encode_decode_message_test, message, nasdaq::itch:
             auto begin_out = out.data();
             //[[maybe_unused]] auto decoded = tc::decode<message>(begin_out, begin_out + out.size());
             [[maybe_unused]] auto decoded = nasdaq::itch::v5_0::decode<message>(begin_out, begin_out + out.size());
+            if constexpr (std::is_same_v<decltype(decoded) const&, decltype(msg)>)
+               BOOST_CHECK(test::cmp(decoded, msg));
+            else
+               BOOST_CHECK_MESSAGE(false, "wrong type has been decoded: " << tc::type_name<decltype(msg)>{}() << " instead of " << tc::type_name<message>{}());
             BOOST_CHECK_EQUAL(std::distance(out.data(), begin_out), out.size());
 		}, decoded_variant);
 }

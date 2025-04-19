@@ -6,8 +6,9 @@ add_executable (nasdaq_itch_v5_0_test
 )
 
 target_link_libraries(nasdaq_itch_v5_0_test
-		transcoder::transcoder
 		md_prsr::nasdaq_itch_v5_0
+		transcoder::transcoder        
+		test_helpers
 	    Boost::disable_autolinking
         Boost::boost
 		Boost::unit_test_framework
