@@ -1,4 +1,5 @@
 #pragma once
+#include "md_prsr/optional.hpp"
 #include "transcoder/traits.hpp"
 #include <type_traits>
 
@@ -10,21 +11,7 @@
 namespace sbe { inline namespace v1 {
 
 template <typename T, T Null>
-class optional
-{
- public:
-   using value_type = T;
-   static constexpr value_type null_value = Null;
-   optional() = default;
-   optional(T value) : value_{std::move(value)} {}
-   optional(std::optional<T> value) : value_{value ? *std::move(value) : null_value} {}
-   constexpr T const& raw_value() const noexcept { return value_; }
-   constexpr bool has_value() const noexcept { return value_ != null_value; }
-   explicit constexpr operator bool() const noexcept { return has_value(); }
-   operator std::optional<T>() const { return has_value() ? std::make_optional(value_) : std::nullopt; }
- private:
-   T value_ = null_value;
-};
+using optional = md_prsr::optional<T,Null>;
 
 
 template <typename T, typename GroupSize>
@@ -34,10 +21,6 @@ struct group
 };
 
 }} // namespace sbe
-
-//#include "sizeof.hpp"
-template<typename T, T Null, typename Options> 
-struct tc::encoded_sizeof<sbe::v1::optional<T, Null>, Options, std::true_type> : tc::encoded_sizeof<T, Options> {};
 
 template <typename T, typename GroupSize, typename Options>
 struct tc::encoded_sizeof<sbe::v1::group<T, GroupSize>, Options, std::true_type> {
@@ -52,14 +35,6 @@ struct tc::encoded_sizeof<sbe::v1::group<T, GroupSize>, Options, std::true_type>
 #include <vector>
 #include <iterator>
 #include <stdexcept>
-
-template <typename T, T Null, typename Options>
-struct tc::decoder<sbe::v1::optional<T, Null>, Options, std::true_type> : private tc::decoder<T, Options>
-{
-	sbe::v1::optional<T, Null> operator()(byte_t const*& begin, [[maybe_unused]] byte_t const* end) noexcept {
-      return {tc::decoder<T, Options>::operator()(begin, end)};
-	}
-};
 
 template <typename T, typename GroupSize, typename Options>
 struct tc::decoder<sbe::v1::group<T, GroupSize>, Options, std::true_type> //: private tc::decoder<T, Options>
@@ -84,13 +59,6 @@ struct tc::decoder<sbe::v1::group<T, GroupSize>, Options, std::true_type> //: pr
 #include <vector>
 #include <iterator>
 #include <stdexcept>
-
-template <typename T, T Null, typename Options>
-struct tc::encoder<sbe::v1::optional<T, Null>, Options, std::true_type> : private tc::encoder<T, Options> {
-   byte_t* operator()(sbe::v1::optional<T, Null> const& value, byte_t* begin, [[maybe_unused]] byte_t* end) noexcept {
-      return {tc::encoder<T, Options>::operator()(value.raw_value(), begin, end)};
-   }
-};
 
 template <typename T, typename GroupSize, typename Options>
 struct tc::encoder<sbe::v1::group<T, GroupSize>, Options, std::true_type> //: private tc::decoder<T, Options>
