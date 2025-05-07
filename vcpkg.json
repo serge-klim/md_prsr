@@ -11,6 +11,7 @@
     "boost-histogram",
     "transcoder",
     "hdf5-blosc",
-    "h5x"
+    "h5x",
+    "pqx"
   ]
 }

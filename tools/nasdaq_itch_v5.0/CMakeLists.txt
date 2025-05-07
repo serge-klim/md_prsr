@@ -9,6 +9,7 @@ find_package(Boost COMPONENTS program_options iostreams log log_setup REQUIRED )
 find_package(transcoder CONFIG REQUIRED)
 find_package(h5x CONFIG REQUIRED)
 find_package(hdf5_blosc)
+find_package(pqx CONFIG REQUIRED)
 
 add_executable (nasdaq_itch_v5_0_tool
                 main.cpp
@@ -17,12 +18,14 @@ add_executable (nasdaq_itch_v5_0_tool
                 message_counter.cpp
                 message_counter.hpp
                 h5x/timestamp.hpp
-                hdf5_writer.cpp
                 hdf5_writer.hpp
+                hdf5_writer.cpp
                 loggers.hpp
                 loggers.cpp
                 message_dump.hpp
-                message_dump.cpp
+                message_dump.cpp                
+                parquet_writer.hpp
+                parquet_writer.cpp                
                 )
 
 if (${hdf5_blosc_FOUND})
@@ -36,13 +39,14 @@ target_link_libraries(nasdaq_itch_v5_0_tool
         md_prsr::nasdaq_moldudp64_v1_0
         $<$<BOOL:${hdf5_blosc_FOUND}>:unofficial::hdf5_blosc>
         h5x::h5x
+        pqx::pqx
         fb::fb_utils::program_options
         fb::fb_utils::program_options::log
         Boost::boost
         Boost::program_options
         Boost::iostreams
         Boost::log
-        Boost::log_setup
+        Boost::log_setup        
 )
 
 

@@ -8,24 +8,24 @@
 #include <filesystem>
 #include <string>
 
+namespace {
 
-boost::program_options::options_description common_options()
-{
-   auto description = boost::program_options::options_description{ "configuration" };
+boost::program_options::options_description common_options() {
+   auto description = boost::program_options::options_description{"configuration"};
    // clang-format off
    description.add_options()
        ("filename,f", boost::program_options::value<std::string>()->required(), "\tnasdaq file")
+       ("path,o", boost::program_options::value<std::string>(), "\toutput path")
        ("verbose,v",  boost::program_options::value<bool>()->default_value(false)->implicit_value(true), "\tverbose")
        ("buffer-size,b", boost::program_options::value<std::size_t>()->default_value(1500), "\tbuffer size")
        ("unpack-first,u", boost::program_options::value<bool>()->default_value(false)->implicit_value(true), "\tfirst unpack, than process")
-       ("run,r", boost::program_options::value<std::string>()->default_value("count"), "\trun one of: count, dump, snapshot, hdf5")
+       ("run,r", boost::program_options::value<std::string>()->default_value("count"), "\trun one of: count, dump, snapshot, hdf5, parquet")
        ;
    // clang-format on
    return description;
 }
 
-std::ostream& help(std::ostream& out, boost::program_options::options_description& description)
-{
+std::ostream& help(std::ostream& out, boost::program_options::options_description& description) {
    // clang-format off
     out << description
         << "\n\n more details: https://github.com/serge-klim/nasdaq/README.md \n";
@@ -33,8 +33,7 @@ std::ostream& help(std::ostream& out, boost::program_options::options_descriptio
    return out;
 }
 
-bool parse_config(boost::program_options::options_description const& description,boost::program_options::variables_map& vm)
-{
+bool parse_config(boost::program_options::options_description const& description, boost::program_options::variables_map& vm) {
    auto res = false;
    auto const& config_opt = vm["config"];
    auto config_filename = config_opt.empty() ? std::make_pair(false, std::string{"config.ini"}) : std::make_pair(true, config_opt.as<std::string>());
@@ -43,19 +42,19 @@ bool parse_config(boost::program_options::options_description const& description
       auto parsed = parse_config_file(ifs, description, true);
       store(parsed, vm);
 
-      //auto const& additional = collect_unrecognized(parsed.options, boost::program_options::include_positional);
-      //init_log_from_unrecognized_program_options(additional);
+      // auto const& additional = collect_unrecognized(parsed.options, boost::program_options::include_positional);
+      // init_log_from_unrecognized_program_options(additional);
       if (!init_log_from_unrecognized_program_options(parsed, vm))
-          configure_default_logger(vm);
+         configure_default_logger(vm);
 
-      //notify(vm); // check config file options sanity
+      // notify(vm); // check config file options sanity
       res = true;
    } else if (config_filename.first)
       throw std::runtime_error{str(boost::format("can't open configuration file \"%1%\"") % config_filename.second)};
    return res;
 }
 
-
+} // namespace
 
 int main(int argc, char* argv[])
 {

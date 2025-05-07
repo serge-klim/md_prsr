@@ -4,6 +4,7 @@
 //#include "snapshotter.hpp"
 #include "fake_sequence.hpp"
 #include "hdf5_writer.hpp"
+#include "parquet_writer.hpp"
 #include <boost/program_options.hpp>
 #include <boost/iostreams/device/mapped_file.hpp>
 #include <boost/iostreams/stream.hpp>
@@ -178,6 +179,10 @@ void run(boost::program_options::variables_map const &options) {
                   })
               ("hdf5", [] (boost::program_options::variables_map const &options){
                     auto proc = hdf5_writer{options};
+                    run(options, proc);
+                  })
+             ("parquet", [] (boost::program_options::variables_map const &options){
+                    auto proc = parquet_writer{options};
                     run(options, proc);
                   })
 	       ;
