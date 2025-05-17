@@ -10,6 +10,7 @@ option (BUILD_TOOLS "build tools" ON)
 option (BUILD_NASDAQ_ITCH_V5_0 "build nasdaq/itch_v5.0" ON)
 option (BUILD_NASDAQ_MOLDUDP64_V1_0 "build nasdaq/moldudp64_v1.0" ON)
 option (BUILD_CME_MDP3_V9 "build cme/mdp3" ON)
+option (BUILD_EOBI_V13_0 "build eobi/v13_0" ON)
 
 if(BUILD_NASDAQ_ITCH_V5_0)
     add_subdirectory(md_prsr/nasdaq/itch_v5.0)
@@ -22,6 +23,10 @@ endif (BUILD_NASDAQ_MOLDUDP64_V1_0)
 if(BUILD_CME_MDP3_V9)
     add_subdirectory(md_prsr/cme/mdp3)
 endif (BUILD_CME_MDP3_V9)
+
+if(BUILD_EOBI_V13_0)
+    add_subdirectory(md_prsr/eobi/v13_0)
+endif (BUILD_EOBI_V13_0)
 
 if(BUILD_TESTS)
   include(CTest)
@@ -49,6 +54,9 @@ if(BUILD_TOOLS)
   if(BUILD_CME_MDP3_V9)
  # 	add_subdirectory(tools/cme_mdp3/reader)
   endif (BUILD_CME_MDP3_V9)
+  if(BUILD_EOBI_V13_0)
+  #  add_subdirectory(tools/eobi/reader)
+  endif (BUILD_EOBI_V13_0)
 
 endif (BUILD_TOOLS)
 
