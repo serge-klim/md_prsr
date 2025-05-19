@@ -65,6 +65,7 @@ if(BUILD_TOOLS)
   #  add_subdirectory(tools/eobi/reader)
   endif (BUILD_EOBI_V13_0)
 
+add_subdirectory(tools/parquetx)
 endif (BUILD_TOOLS)
 
 
