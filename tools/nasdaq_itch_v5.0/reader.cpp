@@ -1,4 +1,5 @@
 #include "loggers.hpp"
+#include "instrument_stats.hpp"
 #include "message_counter.hpp"
 #include "message_dump.hpp"
 //#include "snapshotter.hpp"
@@ -170,6 +171,10 @@ void run(boost::program_options::variables_map const &options) {
               //    })
               ("count", [] (boost::program_options::variables_map const &options){
                     auto proc = message_counter{};
+                    run(options, proc);
+                  })
+              ("instrument-stats", [] (boost::program_options::variables_map const &options){
+                    auto proc = instrument_stats{};
                     run(options, proc);
                   })
               ("dump", [] (boost::program_options::variables_map const &options){

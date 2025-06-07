@@ -16,6 +16,8 @@ add_executable (nasdaq_itch_v5_0_tool
                 fake_sequence.hpp
                 message_counter.cpp
                 message_counter.hpp
+                instrument_stats.cpp
+                instrument_stats.hpp
                 h5x/timestamp.hpp
                 hdf5_writer.cpp
                 hdf5_writer.hpp

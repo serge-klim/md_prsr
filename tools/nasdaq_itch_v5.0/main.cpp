@@ -18,7 +18,7 @@ boost::program_options::options_description common_options()
        ("verbose,v",  boost::program_options::value<bool>()->default_value(false)->implicit_value(true), "\tverbose")
        ("buffer-size,b", boost::program_options::value<std::size_t>()->default_value(1500), "\tbuffer size")
        ("unpack-first,u", boost::program_options::value<bool>()->default_value(false)->implicit_value(true), "\tfirst unpack, than process")
-       ("run,r", boost::program_options::value<std::string>()->default_value("count"), "\trun one of: count, dump, snapshot, hdf5")
+       ("run,r", boost::program_options::value<std::string>()->default_value("count"), "\trun one of: count, instrument-stats, dump, snapshot, hdf5")
        ;
    // clang-format on
    return description;
