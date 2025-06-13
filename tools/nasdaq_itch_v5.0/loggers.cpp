@@ -6,7 +6,7 @@
 
 BOOST_LOG_GLOBAL_LOGGER_INIT(log, logger)
 {
-   logger log{boost::log::keywords::channel = "sockperfect_cli"};
+   logger log{boost::log::keywords::channel = "tool"};
    return log;
 }
 

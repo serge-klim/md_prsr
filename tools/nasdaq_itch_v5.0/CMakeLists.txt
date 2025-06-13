@@ -33,6 +33,7 @@ endif (${hdf5_blosc_FOUND})
 target_link_libraries(nasdaq_itch_v5_0_tool
 		transcoder::transcoder
         md_prsr::nasdaq_itch_v5_0
+        md_prsr::nasdaq_moldudp64_v1_0
         $<$<BOOL:${hdf5_blosc_FOUND}>:unofficial::hdf5_blosc>
         h5x::h5x
         fb::fb_utils::program_options

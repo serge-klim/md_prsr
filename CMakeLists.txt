@@ -30,7 +30,7 @@ if(BUILD_EOBI_V13_0)
 endif (BUILD_EOBI_V13_0)
 if(BUILD_EOBI_V13_1)
     add_subdirectory(md_prsr/eobi/v13_1)
-endif (BUILD_CME_MDP3_V9)
+endif (BUILD_EOBI_V13_1)
 
 if(BUILD_TESTS)
   include(CTest)
