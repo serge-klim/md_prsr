@@ -1,9 +1,9 @@
-﻿if (WIN32)
+﻿if (BOOST_IOSTREAM_WORKAROUND)
    find_package(zstd REQUIRED CONFIG)
    add_library(zstd ALIAS zstd::libzstd_static)
    find_package(liblzma REQUIRED CONFIG)
    add_library(lzma ALIAS liblzma::liblzma)
-endif (WIN32)
+endif (BOOST_IOSTREAM_WORKAROUND)
 
 find_package(Boost COMPONENTS program_options iostreams log log_setup REQUIRED )
 find_package(transcoder CONFIG REQUIRED)
