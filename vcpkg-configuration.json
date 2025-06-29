@@ -2,14 +2,14 @@
   "default-registry": {
     "kind": "git",
     "repository": "https://github.com/microsoft/vcpkg",
-    "baseline": "9b75e789ece3f942159b8500584e35aafe3979ff" 
+    "baseline": "0cb95c860ea83aafc1b24350510b30dec535989a" 
   },
   "registries": [
     {
       "kind": "git",
       "repository": "https://github.com/serge-klim/pkgs",
-      "baseline": "c4f31650b6ec52086a7b30139bba4dc99ef2160a",
-      "packages": [ "hdf5-blosc", "h5x", "transcoder" ]
+      "baseline": "ebfbf2ff2491e3728374b7e8524f755b110e3a4c",
+      "packages": [ "hdf5-blosc", "h5x", "transcoder", "pqx" ]
     }
   ]
 }

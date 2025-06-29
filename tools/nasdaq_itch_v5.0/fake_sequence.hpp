@@ -15,7 +15,7 @@ class fake_sequence  {
 template <typename F>
 std::ptrdiff_t fake_sequence::operator()(tc::byte_t const* begin, tc::byte_t const* end, F&& proc) {
    static constexpr auto header_size = tc::encoded_sizeof<nasdaq::moldudp64::v1_0::packet_block, tc::effective_options<nasdaq::moldudp64::v1_0::packet_block>>::value;
-   while (header_size <= static_cast<std::size_t>(std::distance(begin, end))) {
+   while (header_size <= static_cast<std::size_t>(std::distance(begin, end)) /*&& seqn_ < 1000000*/) {
       auto packet_block = tc::decode<nasdaq::moldudp64::v1_0::packet_block>(begin, end);
       if (packet_block.message_size > std::distance(begin, end)) {
          begin -= header_size;
