@@ -9,23 +9,32 @@ option (BUILD_TESTS "build tests" ON)
 option (BUILD_TOOLS "build tools" ON)
 option (BOOST_IOSTREAM_WORKAROUND "alias lzma zsd" OFF)
 
-
-option (BUILD_NASDAQ_ITCH_V5_0 "build nasdaq/itch_v5.0" ON)
 option (BUILD_NASDAQ_MOLDUDP64_V1_0 "build nasdaq/moldudp64_v1.0" ON)
-option (BUILD_CME_MDP3_V9 "build cme/mdp3" ON)
+option (BUILD_NASDAQ_ITCH_V5_0 "build nasdaq/itch_v5.0" ON)
+
+option (BUILD_CME_MDP3_TECHICAL_HEADERS "build cme/mdp3/techical_headers" ON)
+option (BUILD_CME_MDP3_V9 "build cme/mdp3/v9" ON)
+
 option (BUILD_EOBI_V13_0 "build eobi/v13_0" ON)
 option (BUILD_EOBI_V13_1 "build eobi/v13_1" ON)
-
-if(BUILD_NASDAQ_ITCH_V5_0)
-    add_subdirectory(md_prsr/nasdaq/itch_v5.0)
-endif (BUILD_NASDAQ_ITCH_V5_0)
 
 if(BUILD_NASDAQ_MOLDUDP64_V1_0)
     add_subdirectory(md_prsr/nasdaq/moldudp64_v1.0)
 endif (BUILD_NASDAQ_MOLDUDP64_V1_0)
 
+if(BUILD_NASDAQ_ITCH_V5_0)
+    add_subdirectory(md_prsr/nasdaq/itch_v5.0)
+endif (BUILD_NASDAQ_ITCH_V5_0)
+
+if(BUILD_CME_MDP3_TECHICAL_HEADERS)
+     add_subdirectory(md_prsr/cme/mdp3/techical_headers)
+endif (BUILD_CME_MDP3_TECHICAL_HEADERS)
+
 if(BUILD_CME_MDP3_V9)
-    add_subdirectory(md_prsr/cme/mdp3)
+  if(NOT TARGET md_prsr::cme_mdp3_sbe)
+	add_subdirectory(md_prsr/cme/mdp3/sbe)
+  endif()
+  add_subdirectory(md_prsr/cme/mdp3/v9)
 endif (BUILD_CME_MDP3_V9)
 
 if(BUILD_EOBI_V13_0)

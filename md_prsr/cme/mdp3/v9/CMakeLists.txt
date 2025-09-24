@@ -7,21 +7,19 @@ add_library (md_prsr::cme_mdp3_v9 ALIAS cme_mdp3_v9)
 
 target_sources(cme_mdp3_v9 PUBLIC FILE_SET HEADERS
 				FILES
-				v9/messages.hpp
-				v9/describe.hpp
-				techical_header/messages.hpp
-				techical_header/describe.hpp
-				sbe.hpp
+				messages.hpp
+				describe.hpp
 			   )
 
 target_link_libraries(cme_mdp3_v9
 		INTERFACE 
+		md_prsr::cme_mdp3_sbe
 		transcoder::transcoder
 		Boost::boost
 )
 
 target_include_directories(cme_mdp3_v9 INTERFACE
-		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../..>
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../../..>
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 		)
 
