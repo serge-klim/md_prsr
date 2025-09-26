@@ -1,5 +1,5 @@
 #pragma once
-#include "md_prsr/cme/mdp3/sbe.hpp"
+#include "md_prsr/cme/mdp3/sbe/sbe.hpp"
 #include "transcoder/byte_order.hpp"
 #include "transcoder/options.hpp"
 #include "transcoder/basic_types.hpp"
