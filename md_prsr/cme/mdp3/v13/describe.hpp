@@ -585,16 +585,16 @@ BOOST_DESCRIBE_STRUCT(MDInstrumentDefinitionSpread56::NoLegs, (), (
 
 
 //================MDInstrumentDefinitionFixedIncome57=========================
-__attribute__((unused)) inline auto boost_base_descriptor_fn(MDInstrumentDefinitionFixedIncome57**) {
+inline auto boost_base_descriptor_fn(MDInstrumentDefinitionFixedIncome57**) {
    return typename boost::describe::detail::bases_descriptor_impl<MDInstrumentDefinitionFixedIncome57, boost::describe::detail::list<>>::type();
 }
-__attribute__((unused)) inline auto boost_protected_member_descriptor_fn(MDInstrumentDefinitionFixedIncome57**) {
-    return boost::describe::detail::member_descriptor_fn_impl<boost::describe::mod_public>( 0 );
+inline auto boost_protected_member_descriptor_fn(MDInstrumentDefinitionFixedIncome57**) {
+    return boost::describe::detail::member_descriptor_fn_impl<boost::describe::mod_protected>( 0 );
 }
-__attribute__((unused)) inline auto boost_private_member_descriptor_fn(MDInstrumentDefinitionFixedIncome57**) {
-    return boost::describe::detail::member_descriptor_fn_impl<boost::describe::mod_public>( 0 );
+inline auto boost_private_member_descriptor_fn(MDInstrumentDefinitionFixedIncome57**) {
+    return boost::describe::detail::member_descriptor_fn_impl<boost::describe::mod_private>( 0 );
 }
-__attribute__((unused)) inline auto boost_public_member_descriptor_fn(MDInstrumentDefinitionFixedIncome57**) {
+inline auto boost_public_member_descriptor_fn(MDInstrumentDefinitionFixedIncome57**) {
     return boost::describe::detail::member_descriptor_fn_impl<boost::describe::mod_public>( 0 ,
 
        []{
@@ -1028,16 +1028,16 @@ BOOST_DESCRIBE_STRUCT(MDInstrumentDefinitionFixedIncome57::NoLotTypeRules, (), (
 
 
 //================MDInstrumentDefinitionRepo58=========================
-__attribute__((unused)) inline auto boost_base_descriptor_fn(MDInstrumentDefinitionRepo58**) {
+inline auto boost_base_descriptor_fn(MDInstrumentDefinitionRepo58**) {
    return typename boost::describe::detail::bases_descriptor_impl<MDInstrumentDefinitionRepo58, boost::describe::detail::list<>>::type();
 }
-__attribute__((unused)) inline auto boost_protected_member_descriptor_fn(MDInstrumentDefinitionRepo58**) {
-    return boost::describe::detail::member_descriptor_fn_impl<boost::describe::mod_public>( 0 );
+inline auto boost_protected_member_descriptor_fn(MDInstrumentDefinitionRepo58**) {
+    return boost::describe::detail::member_descriptor_fn_impl<boost::describe::mod_protected>( 0 );
 }
-__attribute__((unused)) inline auto boost_private_member_descriptor_fn(MDInstrumentDefinitionRepo58**) {
-    return boost::describe::detail::member_descriptor_fn_impl<boost::describe::mod_public>( 0 );
+inline auto boost_private_member_descriptor_fn(MDInstrumentDefinitionRepo58**) {
+    return boost::describe::detail::member_descriptor_fn_impl<boost::describe::mod_private>( 0 );
 }
-__attribute__((unused)) inline auto boost_public_member_descriptor_fn(MDInstrumentDefinitionRepo58**) {
+inline auto boost_public_member_descriptor_fn(MDInstrumentDefinitionRepo58**) {
     return boost::describe::detail::member_descriptor_fn_impl<boost::describe::mod_public>( 0 ,
 
        []{
@@ -1545,16 +1545,16 @@ BOOST_DESCRIBE_STRUCT(CollateralMarketValue62::NoMDEntries, (), (
 
 
 //================MDInstrumentDefinitionFX63=========================
-__attribute__((unused)) inline auto boost_base_descriptor_fn(MDInstrumentDefinitionFX63**) {
+inline auto boost_base_descriptor_fn(MDInstrumentDefinitionFX63**) {
    return typename boost::describe::detail::bases_descriptor_impl<MDInstrumentDefinitionFX63, boost::describe::detail::list<>>::type();
 }
-__attribute__((unused)) inline auto boost_protected_member_descriptor_fn(MDInstrumentDefinitionFX63**) {
-    return boost::describe::detail::member_descriptor_fn_impl<boost::describe::mod_public>( 0 );
+inline auto boost_protected_member_descriptor_fn(MDInstrumentDefinitionFX63**) {
+    return boost::describe::detail::member_descriptor_fn_impl<boost::describe::mod_protected>( 0 );
 }
-__attribute__((unused)) inline auto boost_private_member_descriptor_fn(MDInstrumentDefinitionFX63**) {
-    return boost::describe::detail::member_descriptor_fn_impl<boost::describe::mod_public>( 0 );
+inline auto boost_private_member_descriptor_fn(MDInstrumentDefinitionFX63**) {
+    return boost::describe::detail::member_descriptor_fn_impl<boost::describe::mod_private>( 0 );
 }
-__attribute__((unused)) inline auto boost_public_member_descriptor_fn(MDInstrumentDefinitionFX63**) {
+inline auto boost_public_member_descriptor_fn(MDInstrumentDefinitionFX63**) {
     return boost::describe::detail::member_descriptor_fn_impl<boost::describe::mod_public>( 0 ,
 
        []{
