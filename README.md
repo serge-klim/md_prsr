@@ -13,5 +13,7 @@ WIP: market data parsers
   - [schema version:13](https://www.cmegroup.com/ftp/SBEFix/Production/Templates/templates_FixBinary.xml)
 * [EOBI v13.0](https://www.eurex.com/resource/blob/4095436/073b2c5b75cd68fa1a9b34e8883ca1b9/data/T7_R.13.0_%20EOBI_Manual_Version_2.pdf)
 * [EOBI v13.1](https://www.eurex.com/resource/blob/4417682/52249af896465e10295f4203d25fef91/data/T7_R.13.1_%20EOBI_Manual_Version_3.pdf)
+* [EOBI v14.9](https://www.eurex.com/resource/blob/4629416/4783073a69f13025b7c2984d680ae2a5/data/T7_R.14.0_%20EOBI_Manual_Version_2.pdf)
+  - untested (Don't have any samples to test it against. If anybody care to provide them, please contact me)
 
 for usage please see: https://github.com/serge-klim/transcoder
