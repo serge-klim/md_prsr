@@ -19,6 +19,8 @@ option (BUILD_CME_MDP3_V13 "build cme/mdp3/v13" ON)
 option (BUILD_EOBI_V13_0 "build eobi/v13_0" ON)
 option (BUILD_EOBI_V13_1 "build eobi/v13_1" ON)
 
+option (BUILD_B3_UMDF_V2_2_0 "build b3/umdf_v2.2.0" ON)
+
 if(BUILD_NASDAQ_MOLDUDP64_V1_0)
     add_subdirectory(md_prsr/nasdaq/moldudp64_v1.0)
 endif (BUILD_NASDAQ_MOLDUDP64_V1_0)
@@ -44,6 +46,13 @@ if(BUILD_CME_MDP3_V13)
   endif()
   add_subdirectory(md_prsr/cme/mdp3/v13)
 endif (BUILD_CME_MDP3_V13)
+
+if(BUILD_B3_UMDF_V2_2_0)
+  if(NOT TARGET md_prsr::cme_mdp3_sbe)
+	add_subdirectory(md_prsr/cme/mdp3/sbe)
+  endif()
+  add_subdirectory(md_prsr/b3/umdf_v2.2.0)
+endif (BUILD_B3_UMDF_V2_2_0)
 
 if(BUILD_EOBI_V13_0)
     add_subdirectory(md_prsr/eobi/v13_0)
