@@ -1,7 +1,7 @@
 #pragma once
 #include "describe.hpp"
 #include "md_prsr/io.hpp"
-#include "md_prsr/cme/mdp3/sbe/io.hpp"
+#include "md_prsr/sbe/io.hpp"
 #include "io.hpp"
 #include <boost/describe.hpp>
 #include <iostream>
