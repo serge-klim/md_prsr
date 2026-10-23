@@ -5,6 +5,7 @@ add_library (md_prsr::cme_mdp3_sbe ALIAS cme_mdp3_sbe)
 target_sources(cme_mdp3_sbe PUBLIC FILE_SET HEADERS
 				FILES
 				sbe.hpp
+				io.hpp
 			   )
 
 target_link_libraries(cme_mdp3_sbe INTERFACE)

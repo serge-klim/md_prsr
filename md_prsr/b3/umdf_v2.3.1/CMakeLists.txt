@@ -10,6 +10,7 @@ target_sources(b3_umdf_v2_3_1 PUBLIC FILE_SET HEADERS
 				messages.hpp
 				describe.hpp
 				transcoder.hpp
+				io.hpp
 			   )
 
 target_link_libraries(b3_umdf_v2_3_1
